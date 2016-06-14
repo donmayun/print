@@ -1,5 +1,7 @@
 package com.test;
 
+import java.io.FileNotFoundException;
+
 import com.frame.view.MainWindow;
 
 /**
@@ -11,7 +13,7 @@ import com.frame.view.MainWindow;
  */
 public class FrameTest {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException {
 		new MainWindow().initWindow();
 	}
 

@@ -1,14 +1,24 @@
 package com.print;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+import com.communication.TicketTemplate;
+import com.communication.TicketsData;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.sun.jna.Library;
 import com.sun.jna.Native;
 
 public class Main {
 	public interface TscLibDll extends Library {
-		TscLibDll INSTANCE = (TscLibDll) Native.loadLibrary("TSCLIB", TscLibDll.class);
+		TscLibDll INSTANCE = (TscLibDll) Native.loadLibrary("./src/main/resouces/imgs/TSCLIB", TscLibDll.class);
 
 		int about();
 
@@ -40,7 +50,7 @@ public class Main {
 		int windowsfont(int x, int y, int fontheight, int rotation, int fontstyle, int fontunderline, String szFaceName, String content);
 	}
 
-	/*public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		// TscLibDll.INSTANCE.about();
 		// TscLibDll.INSTANCE.openport("TSC T-300A");
 		// TscLibDll.INSTANCE.downloadpcx("C:\\UL.PCX", "UL.PCX");
@@ -69,30 +79,83 @@ public class Main {
 		setUp();
 		// clear();
 		// jump();
-		printY();
-//		printX();
-		// printTest();
+		// printY();
+		// printX();	BACKFEED
+//		TscLibDll.INSTANCE.sendcommand("PUTPCX 550,10,\"UL.PCX\"");
+//		StringBuilder s = new StringBuilder();
+//		s.append("CLS"+"\n");
+//		QRCODE X, Y, ECC Level, cell width, mode, rotation, [model, mask,]"Data string”
+//		s.append("QRCODE 600,1400,M,7,M,180,\"N123!AABC!B0003abc\"");
+//		s.append("PDF417 600,1300,400,200,180,\"Without Options\"");
+//		s.append("QRCODE 400,950,H,4,A,0,\"ABCabc123\""+"\n");
+//		s.append("QRCODE 160,160,H,4,A,0,\"123ABCabc\""+"\n");
+//		s.append("QRCODE 310,310,H,4,A,0,\"印表機ABCabc123\""+"\n");
+//		s.append("PRINT 1,1"+"\n");
+//		 TscLibDll.INSTANCE.sendcommand(s.toString());
+//		 TscLibDll.INSTANCE.printlabel("1", "1");
+//		 TscLibDll.INSTANCE.sendcommand("HOME");
+		 printTest();
 		// printAreaPoint();
+//		printData();
 		close();
 
-	}*/
+	}
+
+	/**
+	 * description:
+	 *
+	 *
+	 * @author don
+	 * @throws Exception
+	 * @date 2016年6月14日 上午10:30:42
+	 */
+	private static void printData() throws Exception {
+		List<TicketTemplate> list = TicketsData.getTicketsData("1420c088-bd64-416b-bf81-1eb3e103b470");
+		for (TicketTemplate ticketTemplate : list) {
+			TscLibDll.INSTANCE.clearbuffer();
+
+			String s = ticketTemplate.getProperties();
+
+			String[] array = s.split(";");
+			if (array == null || array.length <= 1) {
+				return;
+			}
+			Gson gson = new Gson();
+			for (int i = 2; i < array.length; i++) {
+				Map<String, Object> map = gson.fromJson(array[i], new TypeToken<HashMap<String, Object>>() {
+				}.getType());
+
+				TscLibDll.INSTANCE.windowsfont((int) (double) map.get("x"), (int) (double) map.get("y"), 48, 90, 1, 1, "arial", map.get("text").toString());
+				// System.out.println((String) map.get("text"));
+				// System.out.println(map.get("x"));
+				// System.out.println(map.get("y"));
+			}
+			TscLibDll.INSTANCE.printlabel("1", "1");
+
+		}
+
+	}
 
 	public static void setUp() {
 		int result = TscLibDll.INSTANCE.openport("TSC T-300A");
 		result = TscLibDll.INSTANCE.setup("80", "194", "6", "6", "1", "6", "0");
 	}
 
-	public static void printTest() {
+	public static void printTest() throws UnsupportedEncodingException {
 		TscLibDll.INSTANCE.clearbuffer();
 
 		// 1/12
 		String content = getTime();
-		int x = 900;
+		int x = 680;
 		int y = 0;
-
-		int result = TscLibDll.INSTANCE.windowsfont(x, y, 48, 90, 1, 1, "arial", "..");
-		System.out.println("print result :" + result);
-		System.out.println(content + "\t x:" + x + "\t y:" + y);
+		
+		String xmString = "";  
+	    String xmlUTF8="";  
+		xmString = new String("中文".getBytes(),"UTF-8");  
+	    xmlUTF8 = URLDecoder.decode(xmString, "UTF-8");  
+		int result = TscLibDll.INSTANCE.windowsfont(x, y, 48, 180, 1, 1,  "標楷體", "標楷體字型");
+//		System.out.println("print result :" + result);
+		System.out.println(xmString + "\t x:" + x + "\t y:" + y);
 		TscLibDll.INSTANCE.printlabel("1", "1");
 	}
 
@@ -109,7 +172,7 @@ public class Main {
 		}
 		TscLibDll.INSTANCE.printlabel("1", "1");
 	}
-	
+
 	public static void printX() {
 		TscLibDll.INSTANCE.clearbuffer();
 
@@ -125,7 +188,6 @@ public class Main {
 		}
 		TscLibDll.INSTANCE.printlabel("1", "1");
 	}
-
 
 	public static void jump() {
 		TscLibDll.INSTANCE.formfeed();

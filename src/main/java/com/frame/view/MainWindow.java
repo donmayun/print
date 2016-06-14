@@ -50,7 +50,7 @@ public class MainWindow extends JFrame {
 	 * @date 2016年6月8日 下午3:03:18
 	 */
 	private void setIcon() {
-		ImageIcon imageIcon = new ImageIcon("./resouces/imgs/icon.jpg");
+		ImageIcon imageIcon = new ImageIcon("./src/main/resouces/imgs/icon.jpg");
 		this.setIconImage(imageIcon.getImage());
 	}
 
