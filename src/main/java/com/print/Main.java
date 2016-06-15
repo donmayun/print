@@ -1,8 +1,6 @@
 package com.print;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -28,7 +26,7 @@ public class Main {
 
 		int sendcommand(String printerCommand);
 
-		// density打印浓度0-15，sensor类别，0一般，1黑标；vertical：黑标垂直间距，
+		// densityé¹å«æ¸å®å¨Ã¹é¾å²î0-15é¿æ¶îensorç¼î¥î§é©åæéï¿½0å¨ææ·é¼å²å¨ç»±ï¿½1å§æ¶å¶éï½æå¨årticalé¿æ¶å²¸ç»®ï¹å¼½é¥Ñï¿½î¢æé¾î½ï¼é çç¹ç»±ï¿½
 		int setup(String width, String height, String speed, String density, String sensor, String vertical, String offset);
 
 		int downloadpcx(String filename, String image_name);
@@ -45,12 +43,14 @@ public class Main {
 
 		int nobackfeed();
 
-		// 字体高度 rotation：旋转角度，逆时针 fontstyle：0标准，1斜体，2粗体，3粗斜
-		// fontunderline：0下划线，1否 szFaceName字体名
+		// éæ¶ãç¼å¬«îå¦¯åî rotationé¿æ¶ç¢å¦«åæ½ªé¡å¾æ½¡é¼è¾¾è®£ç»±æ¿æé¡æ¨»î§éæ¤æ· fontstyleé¿æ¶³æ·0éºå¶æ´¤é£îæéï¿½1éºåç²ç¼å¬®æéï¿½2ç¼î½ãç¼å¬®æéï¿½3ç¼î½îéï¿½
+		// fontunderlineé¿æ¶³æ·0å¨æ³îé¨æ¿çªéï¼ç¤1é¸æ°¾æ· szFaceNameéæ¶ãç¼å¬®å´¥éï¿½
 		int windowsfont(int x, int y, int fontheight, int rotation, int fontstyle, int fontunderline, String szFaceName, String content);
 	}
 
 	public static void main(String[] args) throws Exception {
+		
+		
 		// TscLibDll.INSTANCE.about();
 		// TscLibDll.INSTANCE.openport("TSC T-300A");
 		// TscLibDll.INSTANCE.downloadpcx("C:\\UL.PCX", "UL.PCX");
@@ -80,23 +80,24 @@ public class Main {
 		// clear();
 		// jump();
 		// printY();
-		// printX();	BACKFEED
-//		TscLibDll.INSTANCE.sendcommand("PUTPCX 550,10,\"UL.PCX\"");
-//		StringBuilder s = new StringBuilder();
-//		s.append("CLS"+"\n");
-//		QRCODE X, Y, ECC Level, cell width, mode, rotation, [model, mask,]"Data string”
-//		s.append("QRCODE 600,1400,M,7,M,180,\"N123!AABC!B0003abc\"");
-//		s.append("PDF417 600,1300,400,200,180,\"Without Options\"");
-//		s.append("QRCODE 400,950,H,4,A,0,\"ABCabc123\""+"\n");
-//		s.append("QRCODE 160,160,H,4,A,0,\"123ABCabc\""+"\n");
-//		s.append("QRCODE 310,310,H,4,A,0,\"印表機ABCabc123\""+"\n");
-//		s.append("PRINT 1,1"+"\n");
-//		 TscLibDll.INSTANCE.sendcommand(s.toString());
-//		 TscLibDll.INSTANCE.printlabel("1", "1");
-//		 TscLibDll.INSTANCE.sendcommand("HOME");
-		 printTest();
+		// printX();æ¤ï¸¼æ· BACKFEED
+		// TscLibDll.INSTANCE.sendcommand("PUTPCX 550,10,\"UL.PCX\"");
+		 StringBuilder s = new StringBuilder();
+		 s.append("CLS" + "\n");
+		// QRCODE X, Y, ECC Level, cell width, mode, rotation, [model,
+		// mask,]"Data stringé³ã¯æ·
+		 s.append("QRCODE 560,750,H,5,A,180,M2,S7,\"马老二是个二货\"");
+		// s.append("PDF417 600,1300,400,200,180,\"Without Options\"");
+		// s.append("QRCODE 400,950,H,4,A,0,\"ABCabc123\""+"\n");
+		// s.append("QRCODE 160,160,H,4,A,0,\"123ABCabc\""+"\n");
+		// s.append("QRCODE 310,310,H,4,A,0,\"é¸æ¥åª½éå¨îéæ»²Cabc123\""+"\n");
+		// s.append("PRINT 1,1"+"\n");
+		 TscLibDll.INSTANCE.sendcommand(s.toString());
+		 TscLibDll.INSTANCE.printlabel("1", "1");
+		// TscLibDll.INSTANCE.sendcommand("HOME");
+//		printTest();
 		// printAreaPoint();
-//		printData();
+		// printData();
 		close();
 
 	}
@@ -107,7 +108,7 @@ public class Main {
 	 *
 	 * @author don
 	 * @throws Exception
-	 * @date 2016年6月14日 上午10:30:42
+	 * @date 2016æ¥ çæ·6éºå ¬æ·14éºå¿æ· å¨æ³ï¹¤å®ï¿½10:30:42
 	 */
 	private static void printData() throws Exception {
 		List<TicketTemplate> list = TicketsData.getTicketsData("1420c088-bd64-416b-bf81-1eb3e103b470");
@@ -142,20 +143,34 @@ public class Main {
 	}
 
 	public static void printTest() throws UnsupportedEncodingException {
+		System.setProperty("jna.encoding","GBK");
 		TscLibDll.INSTANCE.clearbuffer();
 
 		// 1/12
 		String content = getTime();
-		int x = 680;
-		int y = 0;
+		int x = 510;
+		int y = 540;
+
+		String xmString = "";
+		String xmlUTF8 = "";
 		
-		String xmString = "";  
-	    String xmlUTF8="";  
-		xmString = new String("中文".getBytes(),"UTF-8");  
-	    xmlUTF8 = URLDecoder.decode(xmString, "UTF-8");  
-		int result = TscLibDll.INSTANCE.windowsfont(x, y, 48, 180, 1, 1,  "標楷體", "標楷體字型");
-//		System.out.println("print result :" + result);
-		System.out.println(xmString + "\t x:" + x + "\t y:" + y);
+		xmString = new String("中文".getBytes(), "gbk");
+		
+		System.out.println(xmString);
+		
+		int result = TscLibDll.INSTANCE.windowsfont(530, 1150, 48, 180, 1, 1, "宋体", "中文");
+		
+		String ss = new String(xmString.getBytes("utf-8"), "gbk");
+		
+		System.out.println(ss);
+		
+		// TscLibDll.INSTANCE.downloadpcx("./src/main/resouces/imgs/icon.jpg",
+		// "icon.jpg");
+		// TscLibDll.INSTANCE.sendcommand("TEXT 510,1540,\"SIMSUNB.TTF\",180,1,1,\"\\[\"]å¨æå½éï¿½ Type Font Test Print\\[\"]\"");
+
+		// TscLibDll.INSTANCE.printerfont("510", "1540", "TST24.BF2", "180",
+		// "1", "1", "å¨æå½éï¿½ DLL Test!!");
+		// System.out.println("print result :" + result);
 		TscLibDll.INSTANCE.printlabel("1", "1");
 	}
 
@@ -163,7 +178,7 @@ public class Main {
 		TscLibDll.INSTANCE.clearbuffer();
 
 		int step = 12;
-		// y轴
+		// yéçæ·
 		for (int y = 0; y <= 194 * 12; y++) {
 			if (y % step == 0) {
 				System.out.println(y);
@@ -177,7 +192,7 @@ public class Main {
 		TscLibDll.INSTANCE.clearbuffer();
 
 		int step = 12;
-		// x轴
+		// xéçæ·
 		for (int x = 0; x < 80 * 12; x++) {
 			if (x % step == 0) {
 				if (x == 0) {
@@ -205,11 +220,11 @@ public class Main {
 		int step = 30;
 		for (int x = 0; x < 80 * 12; x++) {
 			if (x % step == 0) {
-				// x轴
+				// xéçæ·
 				TscLibDll.INSTANCE.windowsfont(x, 0, step, 90, 1, 1, "arial", x + "");
 			}
 			if (x % (step / 2) == 0) {
-				// 中线
+				// å¨æå¾é¤ï¿½
 				if (x == 0) {
 					continue;
 				}
@@ -217,7 +232,7 @@ public class Main {
 			}
 		}
 
-		// y轴
+		// yéçæ·
 		for (int y = 0; y < 194 * 12; y++) {
 			if (y % step == 0) {
 				if (y == 0) {
