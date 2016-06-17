@@ -15,38 +15,6 @@ import com.sun.jna.Library;
 import com.sun.jna.Native;
 
 public class Main {
-	public interface TscLibDll extends Library {
-		TscLibDll INSTANCE = (TscLibDll) Native.loadLibrary("./src/main/resouces/imgs/TSCLIB", TscLibDll.class);
-
-		int about();
-
-		int openport(String pirnterName);
-
-		int closeport();
-
-		int sendcommand(String printerCommand);
-
-		// densityé¹å«æ¸å®å¨Ã¹é¾å²î0-15é¿æ¶îensorç¼î¥î§é©åæéï¿½0å¨ææ·é¼å²å¨ç»±ï¿½1å§æ¶å¶éï½æå¨årticalé¿æ¶å²¸ç»®ï¹å¼½é¥Ñï¿½î¢æé¾î½ï¼é çç¹ç»±ï¿½
-		int setup(String width, String height, String speed, String density, String sensor, String vertical, String offset);
-
-		int downloadpcx(String filename, String image_name);
-
-		int barcode(String x, String y, String type, String height, String readable, String rotation, String narrow, String wide, String code);
-
-		int printerfont(String x, String y, String fonttype, String rotation, String xmul, String ymul, String text);
-
-		int clearbuffer();
-
-		int printlabel(String set, String copy);
-
-		int formfeed();
-
-		int nobackfeed();
-
-		// éæ¶ãç¼å¬«îå¦¯åî rotationé¿æ¶ç¢å¦«åæ½ªé¡å¾æ½¡é¼è¾¾è®£ç»±æ¿æé¡æ¨»î§éæ¤æ· fontstyleé¿æ¶³æ·0éºå¶æ´¤é£îæéï¿½1éºåç²ç¼å¬®æéï¿½2ç¼î½ãç¼å¬®æéï¿½3ç¼î½îéï¿½
-		// fontunderlineé¿æ¶³æ·0å¨æ³îé¨æ¿çªéï¼ç¤1é¸æ°¾æ· szFaceNameéæ¶ãç¼å¬®å´¥éï¿½
-		int windowsfont(int x, int y, int fontheight, int rotation, int fontstyle, int fontunderline, String szFaceName, String content);
-	}
 
 	public static void main(String[] args) throws Exception {
 		
@@ -82,19 +50,24 @@ public class Main {
 		// printY();
 		// printX();æ¤ï¸¼æ· BACKFEED
 		// TscLibDll.INSTANCE.sendcommand("PUTPCX 550,10,\"UL.PCX\"");
-		 StringBuilder s = new StringBuilder();
-		 s.append("CLS" + "\n");
+//		 StringBuilder s = new StringBuilder();
+//		 s.append("CLS" + "\n");
 		// QRCODE X, Y, ECC Level, cell width, mode, rotation, [model,
 		// mask,]"Data stringé³ã¯æ·
-		 s.append("QRCODE 560,750,H,5,A,180,M2,S7,\"马老二是个二货\"");
+//		 s.append("QRCODE 560,750,H,5,A,180,M2,S7,\"马老二是个二货\"");
 		// s.append("PDF417 600,1300,400,200,180,\"Without Options\"");
 		// s.append("QRCODE 400,950,H,4,A,0,\"ABCabc123\""+"\n");
 		// s.append("QRCODE 160,160,H,4,A,0,\"123ABCabc\""+"\n");
 		// s.append("QRCODE 310,310,H,4,A,0,\"é¸æ¥åª½éå¨îéæ»²Cabc123\""+"\n");
 		// s.append("PRINT 1,1"+"\n");
-		 TscLibDll.INSTANCE.sendcommand(s.toString());
-		 TscLibDll.INSTANCE.printlabel("1", "1");
-		// TscLibDll.INSTANCE.sendcommand("HOME");
+		 
+//		 s.append("<ESC>!?");
+//		 System.out.println(TscLibDll.INSTANCE.about());
+//		TscLibDll.INSTANCE.openport("TSC T-300A");
+		 System.out.println(TscLibDll.INSTANCE.usbportqueryprinter());
+//		  TscLibDll.INSTANCE.sendcommand("HOME");
+//		 System.out.println(TscLibDll.INSTANCE.usbportqueryprinter());
+//		 TscLibDll.INSTANCE.printlabel("1", "1");
 //		printTest();
 		// printAreaPoint();
 		// printData();

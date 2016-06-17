@@ -14,8 +14,12 @@ public enum ErrorCode {
 	
 	
 
-	ERROR_NULL_FRAME(10000, "主窗体未创建"), 
-	ERROR_NULL_MENUBAR(10001, "菜单栏未创建"), 
+	ERROR_NULL_FRAME(10004, "主窗体未创建"), 
+	ERROR_NULL_MENUBAR(10005, "菜单栏未创建"), 
+	
+	
+	ERROR_NULL_TEXT_S(11001, "解析的文本对象字符串不能为空"), 
+	ERROR_NULL_TEXT_JSON(11002, "解析的文本对象JSON转换为空"), 
 	
 	;
 

@@ -8,7 +8,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 import com.exception.ErrorCode;
-import com.exception.FrameException;
+import com.exception.PrintException;
 import com.frame.listener.ItemListener;
 
 /**
@@ -65,10 +65,10 @@ public class MenuDecorator {
 	 */
 	private void validateFrame() {
 		if (jFrame == null) {
-			throw FrameException.Error(ErrorCode.ERROR_NULL_FRAME);
+			throw PrintException.Error(ErrorCode.ERROR_NULL_FRAME);
 		}
 		if (jMenuBar == null) {
-			throw FrameException.Error(ErrorCode.ERROR_NULL_MENUBAR);
+			throw PrintException.Error(ErrorCode.ERROR_NULL_MENUBAR);
 		}
 	}
 }

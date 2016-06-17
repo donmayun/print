@@ -1,7 +1,12 @@
 package com.communication;
 
-public class TicketTemplate {
+import java.io.Serializable;
 
+import com.print.parse.model.PrintSetUp;
+
+public class TicketTemplate implements Serializable {
+
+	private transient static final long serialVersionUID = 1L;
 	private Integer id;
 	private String name;
 	private Integer imageId;
@@ -10,6 +15,12 @@ public class TicketTemplate {
 	private Long createTime;
 	private Integer isDel;
 	private Integer sessionId;
+	private Integer ticketWidth;
+	private Integer ticketHeight;
+	private Integer printDensity;
+	private Integer ticketType;
+	private Integer gapWidth;
+	private Integer printOffset;
 
 	public Integer getSessionId() {
 		return sessionId;
@@ -75,13 +86,71 @@ public class TicketTemplate {
 		return createTime;
 	}
 
+	public Integer getTicketWidth() {
+		return ticketWidth;
+	}
+
+	public void setTicketWidth(Integer ticketWidth) {
+		this.ticketWidth = ticketWidth;
+	}
+
+	public Integer getTicketHeight() {
+		return ticketHeight;
+	}
+
+	public void setTicketHeight(Integer ticketHeight) {
+		this.ticketHeight = ticketHeight;
+	}
+
+	public Integer getPrintDensity() {
+		return printDensity;
+	}
+
+	public void setPrintDensity(Integer printDensity) {
+		this.printDensity = printDensity;
+	}
+
+	public Integer getTicketType() {
+		return ticketType;
+	}
+
+	public void setTicketType(Integer ticketType) {
+		this.ticketType = ticketType;
+	}
+
+	public Integer getGapWidth() {
+		return gapWidth;
+	}
+
+	public void setGapWidth(Integer gapWidth) {
+		this.gapWidth = gapWidth;
+	}
+
+	public Integer getPrintOffset() {
+		return printOffset;
+	}
+
+	public void setPrintOffset(Integer printOffset) {
+		this.printOffset = printOffset;
+	}
+
 	/**
 	 * description:
+	 *
+	 * @return
+	 *
+	 * @author don
+	 * @date 2016年6月17日 上午9:16:31
 	 */
-	@Override
-	public String toString() {
-		return "TicketTemplate [id=" + id + ", name=" + name + ", imageId=" + imageId + ", imageUrl=" + imageUrl + ", properties=" + properties
-				+ ", createTime=" + createTime + ", isDel=" + isDel + ", sessionId=" + sessionId + "]";
+	public PrintSetUp getPrintSetUp() {
+		PrintSetUp psu = new PrintSetUp();
+		psu.setDensity(printDensity);
+		psu.setGapWidth(gapWidth);
+		psu.setWidth(ticketWidth);
+		psu.setHeight(ticketHeight);
+		psu.setPrintOffset(printOffset);
+		psu.setType(ticketType);
+		return psu;
 	}
 
 }

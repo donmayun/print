@@ -122,7 +122,7 @@ public class HttpRequestMethodHandler {
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             } catch (InvocationTargetException e) {
-                throw (Exception)e.getCause();
+                throw e;
             } catch (InstantiationException e) {
                 e.printStackTrace();
             }

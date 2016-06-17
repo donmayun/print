@@ -38,6 +38,8 @@ public interface TscLibDll extends Library {
 
 	int nobackfeed();
 
+	int usbportqueryprinter();
+
 	// 字体高度 rotation：旋转角度，逆时针 fontstyle：0标准，1斜体，2粗体，3粗斜
 	// fontunderline：0下划线，1否 szFaceName字体名
 	int windowsfont(int x, int y, int fontheight, int rotation, int fontstyle, int fontunderline, String szFaceName, String content);

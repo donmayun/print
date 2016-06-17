@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import com.communication.TicketTemplate;
 import com.communication.TicketsData;
 import com.print.PrintService;
+import com.print.PrintUtils;
 
 /**
  * Created by zxw on 2016/1/13.
@@ -25,7 +26,7 @@ import com.print.PrintService;
 public class TestController {
 
 	private Logger log = LoggerFactory.getLogger(this.getClass());
-	
+
 	@RequestMapping("/test.do")
 	@ResponseBody
 	public Map<String, String> service(HttpMethodRequest request, HttpMethodResponse response) {
@@ -44,6 +45,8 @@ public class TestController {
 	@RequestMapping("/print.do")
 	public void print(HttpMethodRequest request, HttpMethodResponse response, String cacheKey) {
 		log.info("print.do  start >>\n" + "cacheKey : " + cacheKey);
+
+		// TODO 是否清空之前未打印的数据
 		List<TicketTemplate> list = null;
 		try {
 			list = TicketsData.getTicketsData(cacheKey);
@@ -51,7 +54,7 @@ public class TestController {
 			for (TicketTemplate ticketTemplate : list) {
 				log.info(ticketTemplate.toString());
 			}
-			
+
 			PrintService ps = new PrintService();
 			ps.printTicket(list);
 		} catch (Exception e) {
@@ -60,4 +63,13 @@ public class TestController {
 
 		response.write("ok");
 	}
+
+	@RequestMapping("/print/status.do")
+	public void printStatus(HttpMethodRequest request, HttpMethodResponse response) {
+		log.info("/print/status.do  start >>\n");
+		PrintService ps = new PrintService();
+		ps.getStatus();
+		response.write(PrintUtils.StatusDes(ps.getStatus()));
+	}
+
 }

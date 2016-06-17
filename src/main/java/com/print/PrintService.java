@@ -1,13 +1,11 @@
 package com.print;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.communication.TicketTemplate;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.print.Main.TscLibDll;
+import com.print.parse.Parse;
+import com.print.parse.model.PrintQrcode;
+import com.print.parse.model.PrintText;
 
 /**
  * description:
@@ -27,26 +25,45 @@ public class PrintService {
 	 * @date 2016年6月15日 下午5:41:25
 	 */
 	public void printTicket(List<TicketTemplate> list) {
-		PrintUtils.setUp();
-		System.setProperty("jna.encoding", "GBK");
+		PrintUtils.open();
 
 		for (TicketTemplate ticketTemplate : list) {
 			TscLibDll.INSTANCE.clearbuffer();
+			// 票纸初始化
+			PrintUtils.setUp(ticketTemplate.getPrintSetUp());
+
 			String s = ticketTemplate.getProperties();
 			String[] array = s.split(";");
 			if (array == null || array.length <= 1) {
 				return;
 			}
-			Gson gson = new Gson();
-			for (int i = 2; i < array.length; i++) {
-				Map<String, Object> map = gson.fromJson(array[i], new TypeToken<HashMap<String, Object>>() {
-				}.getType());
 
-				TscLibDll.INSTANCE.windowsfont((int) (double) map.get("x"), (int) (double) map.get("y"), 48, 90, 0, 0, "宋体", map.get("text").toString());
+			// 二维码解析
+			List<PrintQrcode> qrList = Parse.createQrcodeParse(array[1]).allParseAndOut();
+			PrintUtils.printQrcodes(qrList);
+			// 文本解析
+			PrintText text = null;
+			for (int i = 2; i < array.length; i++) {
+				text = Parse.createTextParse(array[i]).allParseAndOut();
+				PrintUtils.windowsText(text);
 			}
 			TscLibDll.INSTANCE.printlabel("1", "1");
 		}
 		PrintUtils.close();
+	}
+
+	/**
+	 * description: 获取打印机状态
+	 *
+	 *
+	 * @author don
+	 * @date 2016年6月16日 下午2:09:58
+	 */
+	public int getStatus() {
+		PrintUtils.open();
+		int status = TscLibDll.INSTANCE.usbportqueryprinter();
+		PrintUtils.close();
+		return status;
 	}
 
 }
