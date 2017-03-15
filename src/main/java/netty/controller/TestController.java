@@ -1,23 +1,20 @@
 package netty.controller;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import netty.http.context.HttpMethodRequest;
-import netty.http.context.HttpMethodResponse;
-import netty.http.mvc.RequestMapping;
-import netty.http.mvc.ResponseBody;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-
 import com.communication.TicketTemplate;
 import com.communication.TicketsData;
 import com.print.PrintService;
 import com.print.PrintUtils;
+import netty.http.context.HttpMethodRequest;
+import netty.http.context.HttpMethodResponse;
+import netty.http.mvc.RequestMapping;
+import netty.http.mvc.ResponseBody;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Don on 2016/1/13.
