@@ -99,7 +99,7 @@ public class ServerConfig {
 	
 	public static String getProperty(String key){
         if(props == null){
-            throw new IllegalAccessError("com.cgeel.com.zxw.utils.Configuration 未初始化");
+            throw new IllegalAccessError("com.cgeel.com.Don.utils.Configuration 未初始化");
         }
 		return props.getProperty(key);
 	}

@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 
 /**
- * Created with IntelliJ IDEA. User: ZXW Date: 13-6-18 Time: 下午4:57 To change
+ * Created with IntelliJ IDEA. User: Don Date: 13-6-18 Time: 下午4:57 To change
  * this template use File | Settings | File Templates.
  */
 public class SpringContext {

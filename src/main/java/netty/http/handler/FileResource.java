@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 /**
- * Created by zxw on 2016/1/13.
+ * Created by Don on 2016/1/13.
  */
 public class FileResource {
 

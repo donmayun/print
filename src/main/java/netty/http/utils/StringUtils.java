@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by ZXW on 2014/11/12.
+ * Created by Don on 2014/11/12.
  */
 public class StringUtils {
 

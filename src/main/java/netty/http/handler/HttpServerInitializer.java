@@ -18,10 +18,10 @@ public class HttpServerInitializer extends ChannelInitializer<SocketChannel> {
 	public void initChannel(SocketChannel ch) throws Exception {
 		ChannelPipeline p = ch.pipeline();
 		p.addLast("logger", new LoggingHandler(LogLevel.DEBUG));
-		ch.pipeline().addLast("com.zxw.http-decoder", new HttpRequestDecoder());
-		ch.pipeline().addLast("com.zxw.http-aggregator", new HttpObjectAggregator(Integer.MAX_VALUE));
-		ch.pipeline().addLast("com.zxw.http-encoder", new HttpResponseEncoder());
-		ch.pipeline().addLast("com.zxw.http-chunked", new ChunkedWriteHandler());
+		ch.pipeline().addLast("com.Don.http-decoder", new HttpRequestDecoder());
+		ch.pipeline().addLast("com.Don.http-aggregator", new HttpObjectAggregator(Integer.MAX_VALUE));
+		ch.pipeline().addLast("com.Don.http-encoder", new HttpResponseEncoder());
+		ch.pipeline().addLast("com.Don.http-chunked", new ChunkedWriteHandler());
 		ch.pipeline().addLast("handler", requestHandler);
 	}
 }

@@ -11,7 +11,7 @@ import java.io.StringWriter;
 import java.util.Map;
 
 /**
- * Created by zxw on 1/7/16.
+ * Created by Don on 1/7/16.
  */
 public class VelocityManager {
 

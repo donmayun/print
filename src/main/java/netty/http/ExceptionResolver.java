@@ -3,7 +3,7 @@ package netty.http;
 import io.netty.channel.ChannelHandlerContext;
 
 /**
- * Created by zxw on 2016/1/15.
+ * Created by Don on 2016/1/15.
  */
 public interface ExceptionResolver {
 
